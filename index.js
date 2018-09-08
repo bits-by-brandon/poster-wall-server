@@ -1,8 +1,9 @@
-const app = require('express')();
+const express = require('express');
+const app = express();
 const http = require('http').Server(app);
 const PORT = process.env.PORT || 3000;
 
-app.get('/', function () {
+app.get('/', function (req, res) {
   res.send('<h1>Hello world</h1>');
 });
 
