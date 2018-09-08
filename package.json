@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "deploy": "pm2 deploy production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
