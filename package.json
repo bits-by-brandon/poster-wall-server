@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "deploy": "pm2 deploy production",
-    "dev": "DEBUG=poster-wall,express* nodemon index.js",
+    "dev": "DEBUG=poster-wall,express* NODE_ENV=development nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

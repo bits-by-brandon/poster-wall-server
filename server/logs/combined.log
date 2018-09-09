@@ -276,3 +276,23 @@
 {"message":"user connected","level":"info"}
 {"message":"got command: off","level":"info"}
 {"message":"got pattern: pulse","level":"info"}
+{"message":"got pattern: spotlight","level":"info"}
+{"message":"user disconnected","level":"info"}
+{"message":"user connected","level":"info"}
+{"message":"user disconnected","level":"info"}
+{"message":"user connected","level":"info"}
+{"message":"user disconnected","level":"info"}
+{"message":"Server listening on port 3000","level":"info"}
+{"message":"Server listening on port 3000","level":"info"}
+{"message":"Server listening on port 3000","level":"info"}
+{"message":"Server listening on port 3000","level":"info"}
+{"message":"Server listening on port 3000","level":"info"}
+{"message":"Server listening on port 3000","level":"info"}
+{"message":"Server listening on port 3000","level":"info"}
+{"message":"user connected","level":"info"}
+{"message":"user disconnected","level":"info"}
+{"message":"user connected","level":"info"}
+{"message":"user disconnected","level":"info"}
+{"message":"user connected","level":"info"}
+{"message":"Server listening on port 3000","level":"info"}
+{"message":"user connected","level":"info"}

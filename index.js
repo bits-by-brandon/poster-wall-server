@@ -16,15 +16,16 @@ io.on("connection", socket => socketController(socket, io));
 // Allow ips to come from proxy forward
 app.enable("trust proxy");
 
-app.get("/", (req, res) => {
-  res.sendFile("index.html", { root: __dirname + "/public/" }, errorHandler);
-});
+if(process.env.NODE_ENV === 'development') {
+  app.use(express.static(__dirname + '/public'));
+}
 
 // Let other middleware use the spawned IO instance
 app.use((req, res, next) => {
   req.io = io;
   next();
 });
+
 app.use("/control", control);
 
 http.listen(PORT, () => {
