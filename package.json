@@ -5,12 +5,17 @@
   "main": "index.js",
   "scripts": {
     "deploy": "pm2 deploy production",
+    "dev": "DEBUG=poster-wall,express* nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.3",
-    "socket.io": "^2.1.1"
+    "socket.io": "^2.1.1",
+    "winston": "^3.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
   }
 }
