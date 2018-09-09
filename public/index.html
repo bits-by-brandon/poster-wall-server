@@ -172,6 +172,15 @@
              })
        });
 
+       socket.on('COMMAND', function(command) {
+         showAlert('running command: ' + command);
+
+         switch (command) {
+           case "off":
+             off();
+         }
+       });
+
        function showAlert(msg){
          alertText.innerHTML = msg;
 
@@ -181,6 +190,11 @@
 
         function getRandomInt(min, max){
             return Math.floor(Math.random() * (max - min) + min);
+        }
+
+        function off() {
+         timeline.clear();
+         TweenLite.to(".card", 0.3, {opacity: 0, ease: Power1.easeIn})
         }
 
         function spotlight(timeline, cardList, spotlightedArray) {

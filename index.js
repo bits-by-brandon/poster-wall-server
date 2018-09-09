@@ -20,6 +20,11 @@ app.get("/", (req, res) => {
   res.sendFile("index.html", { root: __dirname + "/public/" }, errorHandler);
 });
 
+// Let other middleware use the spawned IO instance
+app.use((req, res, next) => {
+  req.io = io;
+  next();
+});
 app.use("/control", control);
 
 http.listen(PORT, () => {
@@ -30,5 +35,6 @@ http.listen(PORT, () => {
 });
 
 module.exports = {
-  appName
+  appName,
+  io
 };

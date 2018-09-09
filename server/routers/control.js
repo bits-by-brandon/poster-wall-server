@@ -1,15 +1,26 @@
 const router = require("express").Router();
+const { commands, patterns } = require("../utilities/patterns");
 const { logger } = require("../logger");
 
-router.use(function handleRoute(req, res, next) {
-  logger.info("got route");
-  next();
+router.get("/:pattern", (req, res) => {
+  const pattern = req.params.pattern;
+
+  if (patterns.includes(pattern)) {
+    logger.info("got pattern: " + pattern);
+    req.io.emit("SET_PATTERN", pattern);
+    res.send(`<p>${pattern} sent</p>`);
+    return;
+  }
+
+  if (commands.includes(pattern)) {
+    logger.info("got command: " + pattern);
+    req.io.emit("COMMAND", pattern);
+    res.send(`<p>${pattern} sent</p>`);
+    return;
+  }
+
+  logger.warn("invalid pattern/command: " + pattern);
+  res.send(`<p>${pattern} is not a valid command</p>`);
 });
 
-router.get('/:pattern', (req, res) => {
-  logger.info("got pattern: " + req.params.pattern);
-  res.send(`<p>${req.params.pattern}</p>`)
-})
-
 module.exports = router;
-
