@@ -5,17 +5,18 @@ const { logger } = require("../logger");
 router.get("/:pattern", (req, res) => {
   const pattern = req.params.pattern;
 
-  if (patterns.includes(pattern)) {
-    logger.info("got pattern: " + pattern);
-    req.io.emit("SET_PATTERN", pattern);
-    res.send(`<p>${pattern} sent</p>`);
+  if (pattern in patterns) {
+    logger.info("got pattern: " + patterns[pattern]);
+    req.io.emit("SET_PATTERN", patterns[pattern]);
+    res.send(`<p>${patterns[pattern]} sent</p>`);
     return;
   }
 
-  if (commands.includes(pattern)) {
-    logger.info("got command: " + pattern);
-    req.io.emit("COMMAND", pattern);
-    res.send(`<p>${pattern} sent</p>`);
+  if (pattern in commands) {
+    logger.info("got command: " + commands[pattern]);
+    req.io.emit("EXECUTE_COMMAND", commands[pattern]);
+    res.status(501);
+    res.send(`<p>${commands[pattern]} sent</p>`);
     return;
   }
 

@@ -29,18 +29,33 @@ socket.on("SET_PATTERN", function(pattern) {
   );
 });
 
-socket.on("COMMAND", function(command) {
-  showAlert("running command: " + command);
-
-  switch (command) {
-    case "off":
-      off();
-    case "off":
+// Executes appropriate command based on string identifier
+socket.on("EXECUTE_COMMAND", executeCommand);
+function executeCommand(command, alertUser = true) {
+  if (alertUser) {
+    showAlert("running command: " + command);
   }
-});
+  switch (command) {
+    case "OFF":
+      off(timeline);
+      break;
+    case "ON":
+      on(timeline);
+      break;
+    case "REFRESH_BROWSER":
+      refreshBrowser();
+      break;
+  }
+}
 
-function showAlert(msg) {
-  alertText.innerHTML = msg;
+
+/**
+ * Temporarily displays an alert prompt on the screen with the passed in
+ * message
+ * @param {string} message - Message to be displayed
+ */
+function showAlert(message) {
+  alertText.innerHTML = message;
 
   TweenLite.to(alertWrapper, 0.5, { opacity: 1, ease: Power1.easeIn });
   TweenLite.to(alertWrapper, 0.5, {
@@ -50,14 +65,42 @@ function showAlert(msg) {
   });
 }
 
+/**
+ * Returns a random integer between the min and max values provided
+ * @param {number} min - (inclusive)
+ * @param {number} max - (inclusive)
+ * @return {number} randomNumber
+ */
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-function off() {
+/**
+ * Turns all poster off and clears timeline
+ * @param {TimelineMax} timeline
+ */
+function off(timeline) {
   timeline.clear();
   TweenLite.to(".card", 0.3, { opacity: 0, ease: Power1.easeIn });
 }
+
+/**
+ * Turns all poster on and clears timeline
+ * @param {TimelineMax} timeline
+ */
+function on(timeline) {
+  timeline.clear();
+  TweenLite.to(".card", 0.3, { opacity: 1, ease: Power1.easeIn });
+}
+
+/**
+ * Refreshes the browser window
+ */
+function refreshBrowser() {
+  window.location.reload(true);
+}
+
+// ========= Patterns
 
 function spotlight(timeline, cardList, spotlightedArray) {
   console.log("spotlight");
@@ -146,9 +189,3 @@ function scan(timeline, cardList) {
     );
   }
 }
-
-// spotlight(cardList, []);
-//  chase(cardList, 0);
-//  scan(timeline, cardList);
-// pulse(timeline);
-//  gScan(cardList, false);
