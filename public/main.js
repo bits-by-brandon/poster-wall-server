@@ -18,10 +18,10 @@ socket.on("SET_PATTERN", function(pattern) {
     function() {
       // Execute pattern
       switch (pattern) {
-        case "spotlight":
+        case "SPOTLIGHT":
           spotlight(timeline, cardList, []);
           break;
-        case "pulse":
+        case "PULSE":
           pulse(timeline, cardList);
           break;
       }
