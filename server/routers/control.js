@@ -8,7 +8,10 @@ router.get("/:pattern", (req, res) => {
   if (pattern in patterns) {
     logger.info("got pattern: " + patterns[pattern]);
     req.io.emit("SET_PATTERN", patterns[pattern]);
-    res.send(`<p>${patterns[pattern]} sent</p>`);
+    res.json({
+      status: 'OK',
+      meta: `${patterns[pattern]} sent`
+    });
     return;
   }
 
@@ -16,12 +19,18 @@ router.get("/:pattern", (req, res) => {
     logger.info("got command: " + commands[pattern]);
     req.io.emit("EXECUTE_COMMAND", commands[pattern]);
     res.status(501);
-    res.send(`<p>${commands[pattern]} sent</p>`);
+    res.json({
+      status: 'OK',
+      meta: `${commands[pattern]} sent`
+    });
     return;
   }
 
   logger.warn("invalid pattern/command: " + pattern);
-  res.send(`<p>${pattern} is not a valid command</p>`);
+  res.json({
+    status: 'FAILED',
+    meta: `${pattern} is not a valid pattern / command`
+  });
 });
 
 module.exports = router;
