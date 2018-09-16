@@ -8,8 +8,7 @@
     "moduleResolution": "node",
     "target": "es5",
     "allowJs": true,
-    "allowSyntheticDefaultImports": true,
-    "watch": true
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "src/server/**/*"

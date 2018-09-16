@@ -10,25 +10,26 @@ router.get("/:pattern", function (req, res) {
         logger_1.default.info("got pattern: " + patterns_1.patterns[pattern]);
         req.io.emit("SET_PATTERN", patterns_1.patterns[pattern]);
         res.json({
-            status: "OK",
-            meta: patterns_1.patterns[pattern] + " sent"
+            status: "200",
+            message: patterns_1.patterns[pattern] + " sent"
         });
         return;
     }
     if (pattern in patterns_1.commands) {
         logger_1.default.info("got command: " + patterns_1.commands[pattern]);
         req.io.emit("EXECUTE_COMMAND", patterns_1.commands[pattern]);
-        res.status(501);
         res.json({
-            status: "OK",
-            meta: patterns_1.commands[pattern] + " sent"
+            status: "200",
+            message: patterns_1.commands[pattern] + " sent"
         });
         return;
     }
     logger_1.default.warn("invalid pattern/command: " + pattern);
+    res.status(404);
     res.json({
-        status: "FAILED",
-        meta: pattern + " is not a valid pattern / command"
+        status: "404",
+        message: pattern + " is not a valid pattern / command",
+        description: "The requested pattern / command does not exist"
     });
 });
 exports.default = router;
