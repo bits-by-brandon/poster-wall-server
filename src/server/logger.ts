@@ -4,18 +4,16 @@ import { Transports } from "winston/lib/winston/transports";
 const logger: winston = winston;
 
 if (process.env.NODE_ENV === "production") {
-  winston.add(
-    winston.transports.File({
-      filename: __dirname + "/logs/combined.log"
-    })
-  );
+  logger.add(winston.transports.File, {
+    name: "combined-file",
+    filename: __dirname + "/logs/combined.log"
+  });
 
-  winston.add(
-    winston.transports.File({
-      filename: __dirname + "/logs/errors.log",
-      level: "error"
-    })
-  );
+  logger.add(winston.transports.File, {
+    name: "error-file",
+    filename: __dirname + "/logs/errors.log",
+    level: "error"
+  });
 }
 
 /**

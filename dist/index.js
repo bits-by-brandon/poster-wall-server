@@ -25,10 +25,10 @@ app.use(function (req, res, next) {
 app.use("/control", control_1.default);
 // Start the http server
 http.listen(config_1.port, function () {
-    logger_1.default.info("Server listening on port " + config_1.port);
     // Inform the host environment that the application is ready
     if (typeof process.send === "function") {
         process.send("ready");
     }
+    logger_1.default.info("Server listening on port " + config_1.port);
 });
 //# sourceMappingURL=index.js.map
