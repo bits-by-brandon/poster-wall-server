@@ -2,7 +2,7 @@
   "name": "poster-wall-server",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/server.js",
+  "main": "dist/index.js",
   "scripts": {
     "deploy": "pm2 deploy production",
     "watch-server": "tsc",
