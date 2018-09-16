@@ -1,15 +1,18 @@
-const router = require("express").Router();
-const { commands, patterns } = require("../utilities/patterns");
-const { logger } = require("../logger");
+import logger from "../logger";
+import { Response, Router } from "express";
+import { commands, patterns } from "../utilities/patterns";
+import { SocketRequest } from "../types";
 
-router.get("/:pattern", (req, res) => {
+const router = Router();
+
+router.get("/:pattern", (req: SocketRequest, res: Response) => {
   const pattern = req.params.pattern;
 
   if (pattern in patterns) {
     logger.info("got pattern: " + patterns[pattern]);
     req.io.emit("SET_PATTERN", patterns[pattern]);
     res.json({
-      status: 'OK',
+      status: "OK",
       meta: `${patterns[pattern]} sent`
     });
     return;
@@ -20,7 +23,7 @@ router.get("/:pattern", (req, res) => {
     req.io.emit("EXECUTE_COMMAND", commands[pattern]);
     res.status(501);
     res.json({
-      status: 'OK',
+      status: "OK",
       meta: `${commands[pattern]} sent`
     });
     return;
@@ -28,9 +31,9 @@ router.get("/:pattern", (req, res) => {
 
   logger.warn("invalid pattern/command: " + pattern);
   res.json({
-    status: 'FAILED',
+    status: "FAILED",
     meta: `${pattern} is not a valid pattern / command`
   });
 });
 
-module.exports = router;
+export default router;
