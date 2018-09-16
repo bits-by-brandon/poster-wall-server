@@ -21,7 +21,6 @@ router.get("/:pattern", (req: SocketRequest, res: Response) => {
   if (pattern in commands) {
     logger.info("got command: " + commands[pattern]);
     req.io.emit("EXECUTE_COMMAND", commands[pattern]);
-    res.status(501);
     res.json({
       status: "200",
       message: `${commands[pattern]} sent`
@@ -30,8 +29,9 @@ router.get("/:pattern", (req: SocketRequest, res: Response) => {
   }
 
   logger.warn("invalid pattern/command: " + pattern);
+  res.status(404);
   res.json({
-    status: "FAILED",
+    status: "404",
     message: `${pattern} is not a valid pattern / command`,
     description: `The requested pattern / command does not exist`
   });
