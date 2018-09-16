@@ -1,7 +1,7 @@
 module.exports = {
   apps : [{
     name      : 'poster-wall',
-    script    : 'index.js',
+    script    : './dist/index.js',
     wait_ready: true,
     listen_timeout: 3000,
     env: {

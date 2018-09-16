@@ -2,10 +2,11 @@
   "name": "poster-wall-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "deploy": "pm2 deploy production",
-    "dev": "DEBUG=poster-wall,express* NODE_ENV=development nodemon index.js",
+    "watch-server": "tsc",
+    "dev": "DEBUG=poster-wall,express* NODE_ENV=development nodemon ./dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -13,9 +14,14 @@
   "dependencies": {
     "express": "^4.16.3",
     "socket.io": "^2.1.1",
-    "winston": "^3.1.0"
+    "winston": "^2.4.3"
   },
   "devDependencies": {
-    "nodemon": "^1.18.4"
+    "@types/express": "^4.16.0",
+    "nodemon": "^1.18.4",
+    "ts-loader": "^5.1.1",
+    "typescript": "^3.0.3",
+    "webpack": "^4.19.0",
+    "webpack-cli": "^3.1.0"
   }
 }
