@@ -1,10 +1,11 @@
-const { logger } = require("./logger");
+import logger from "./logger";
+import SocketIO = require("socket.io");
 
 /**
- * @param {Socket} socket
+ * @param {SocketIO} socket
  * @return void
  */
-const socketController = socket => {
+export default (socket: SocketIO) => {
   logger.info("user connected");
   socket.on("disconnect", handleSocketDisconnect);
   socket.on("message", handleMessage);
@@ -26,5 +27,3 @@ const handleSocketDisconnect = () => {
 const handleMessage = msg => {
   logger.info("message: " + msg);
 };
-
-module.exports = socketController;

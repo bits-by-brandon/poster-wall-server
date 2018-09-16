@@ -1,19 +1,21 @@
-var logger = require("./logger").logger;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var logger_1 = require("./logger");
 /**
- * @param {Socket} socket
+ * @param {SocketIO} socket
  * @return void
  */
-var socketController = function (socket) {
-    logger.info("user connected");
+exports.default = (function (socket) {
+    logger_1.default.info("user connected");
     socket.on("disconnect", handleSocketDisconnect);
     socket.on("message", handleMessage);
-};
+});
 /**
  * Function that logs a user disconnect action
  * @return void
  */
 var handleSocketDisconnect = function () {
-    logger.info("user disconnected");
+    logger_1.default.info("user disconnected");
 };
 /**
  * Logs a message to configured logger
@@ -21,7 +23,6 @@ var handleSocketDisconnect = function () {
  * @return void
  */
 var handleMessage = function (msg) {
-    logger.info("message: " + msg);
+    logger_1.default.info("message: " + msg);
 };
-module.exports = socketController;
 //# sourceMappingURL=socketController.js.map
