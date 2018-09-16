@@ -3,13 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var winston = require("winston");
 var logger = winston;
 if (process.env.NODE_ENV === "production") {
-    winston.add(winston.transports.File({
+    logger.add(winston.transports.File, {
+        name: "combined-file",
         filename: __dirname + "/logs/combined.log"
-    }));
-    winston.add(winston.transports.File({
+    });
+    logger.add(winston.transports.File, {
+        name: "error-file",
         filename: __dirname + "/logs/errors.log",
         level: "error"
-    }));
+    });
 }
 /**
  * Generic function to node.js callback style errors

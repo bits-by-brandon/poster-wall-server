@@ -40,11 +40,11 @@ app.use("/control", control);
 http.listen(
   port,
   (): void => {
-      logger.info(`Server listening on port ${port}`);
+      // Inform the host environment that the application is ready
+      if (typeof process.send === "function") {
+          process.send("ready");
+      }
 
-    // Inform the host environment that the application is ready
-    if (typeof process.send === "function") {
-      process.send("ready");
-    }
+      logger.info(`Server listening on port ${port}`);
   }
 );
