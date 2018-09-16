@@ -20,7 +20,7 @@ module.exports = {
       ref  : 'origin/master',
       repo : 'git@github.com:brandondc741/poster-wall-server.git',
       path : '/var/www/public/poster-wall.brandonchang.me',
-      'post-deploy' : 'npm install && npm run build && pm2 reload ecosystem.config.js --env production'
+      'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env production'
     }
   }
 };
