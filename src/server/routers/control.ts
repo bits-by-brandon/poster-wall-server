@@ -12,8 +12,8 @@ router.get("/:pattern", (req: SocketRequest, res: Response) => {
     logger.info("got pattern: " + patterns[pattern]);
     req.io.emit("SET_PATTERN", patterns[pattern]);
     res.json({
-      status: "OK",
-      meta: `${patterns[pattern]} sent`
+      status: "200",
+      message: `${patterns[pattern]} sent`
     });
     return;
   }
@@ -23,8 +23,8 @@ router.get("/:pattern", (req: SocketRequest, res: Response) => {
     req.io.emit("EXECUTE_COMMAND", commands[pattern]);
     res.status(501);
     res.json({
-      status: "OK",
-      meta: `${commands[pattern]} sent`
+      status: "200",
+      message: `${commands[pattern]} sent`
     });
     return;
   }
@@ -32,7 +32,8 @@ router.get("/:pattern", (req: SocketRequest, res: Response) => {
   logger.warn("invalid pattern/command: " + pattern);
   res.json({
     status: "FAILED",
-    meta: `${pattern} is not a valid pattern / command`
+    message: `${pattern} is not a valid pattern / command`,
+    description: `The requested pattern / command does not exist`
   });
 });
 
