@@ -10,7 +10,7 @@ import logger from "./logger";
 
 // Types
 import * as SocketIO from "socket.io";
-import { SocketRequest } from "./types";
+import { CustomRequest } from "./types";
 import { Express, Response } from "express";
 
 // Routers
@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === "development") {
 
 // Let other middleware use the instantiated io instance
 app.use(
-  (req: SocketRequest, res: Response, next: Function): void => {
+  (req: CustomRequest, res: Response, next: Function): void => {
     req.io = io;
     next();
   }

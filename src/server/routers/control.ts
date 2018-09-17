@@ -1,11 +1,11 @@
 import logger from "../logger";
 import { Response, Router } from "express";
 import { commands, patterns } from "../utilities/patterns";
-import { SocketRequest } from "../types";
+import { CustomRequest } from "../types";
 
 const router = Router();
 
-router.get("/:pattern", (req: SocketRequest, res: Response) => {
+router.get("/:pattern", (req: CustomRequest, res: Response) => {
   const pattern = req.params.pattern;
 
   if (pattern in patterns) {
