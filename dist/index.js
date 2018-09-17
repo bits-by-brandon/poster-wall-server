@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var http_1 = require("http");
 var express = require("express");
 var socketIO = require("socket.io");
-var dbConnect_1 = require("./dbConnect");
 var config_1 = require("./config");
+var dbConnect_1 = require("./dbConnect");
 var socketController_1 = require("./socketController");
 var logger_1 = require("./logger");
+var http_1 = require("http");
 // Routers
 var control_1 = require("./routers/control");
 var app = express();
@@ -33,19 +33,28 @@ app.use("/control", control_1.default);
  * @return Promise
  */
 var startServer = function (http) {
-    return new Promise(function (resolve) {
+    return new Promise(function (resolve, reject) {
+        http.on("error", function (e) {
+            reject(e);
+        });
         http.listen(config_1.port, resolve);
+    }).then(function () {
+        logger_1.default.info("Server listening on port " + config_1.port);
     });
 };
+/**
+ * Sends the ready signal to the outside world
+ */
 function applicationReady() {
     // Inform the host environment that the application is ready
     if (typeof process.send === "function") {
         process.send("ready");
     }
-    logger_1.default.info("Server listening on port " + config_1.port);
 }
+// List of bootup tasks to be completed before setting the app as ready
+var bootupTasks = [startServer(http), dbConnect_1.initializeDb()];
 // Start all required services, then send the ready signal
-Promise.all([startServer(http), dbConnect_1.initializeDb()])
+Promise.all(bootupTasks)
     .then(applicationReady)
     .catch(function (e) {
     logger_1.default.error(e);

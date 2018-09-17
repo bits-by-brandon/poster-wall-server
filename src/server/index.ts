@@ -1,10 +1,7 @@
-import { Server } from "http";
 import express = require("express");
 import socketIO = require("socket.io");
-import { initializeDb } from "./dbConnect";
-
 import { port } from "./config";
-
+import { initializeDb } from "./dbConnect";
 import socketController from "./socketController";
 import logger from "./logger";
 
@@ -12,6 +9,7 @@ import logger from "./logger";
 import * as SocketIO from "socket.io";
 import { CustomRequest } from "./types";
 import { Express, Response } from "express";
+import { Server } from "http";
 
 // Routers
 import control from "./routers/control";
@@ -48,22 +46,31 @@ app.use("/control", control);
  * @return Promise
  */
 const startServer = (http: Server): Promise<void> => {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
+    http.on("error", e => {
+      reject(e);
+    });
     http.listen(port, resolve);
+  }).then(() => {
+    logger.info(`Server listening on port ${port}`);
   });
 };
 
+/**
+ * Sends the ready signal to the outside world
+ */
 function applicationReady(): void {
   // Inform the host environment that the application is ready
   if (typeof process.send === "function") {
     process.send("ready");
   }
-
-  logger.info(`Server listening on port ${port}`);
 }
 
+// List of bootup tasks to be completed before setting the app as ready
+const bootupTasks: Array<Promise<any>> = [startServer(http), initializeDb()];
+
 // Start all required services, then send the ready signal
-Promise.all([startServer(http), initializeDb()])
+Promise.all(bootupTasks)
   .then(applicationReady)
   .catch(e => {
     logger.error(e);
