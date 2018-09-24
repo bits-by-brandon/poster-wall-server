@@ -1,4 +1,5 @@
 import express = require("express");
+import helmet = require("helmet");
 import socketIO = require("socket.io");
 import { port } from "./config";
 import { initializeDb } from "./dbConnect";
@@ -35,6 +36,10 @@ app.use(
     next();
   }
 );
+
+// Middleware
+app.use(helmet());
+
 
 // Routers
 app.use("/control", control);

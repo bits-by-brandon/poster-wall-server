@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
+var helmet = require("helmet");
 var socketIO = require("socket.io");
 var config_1 = require("./config");
 var dbConnect_1 = require("./dbConnect");
@@ -24,6 +25,8 @@ app.use(function (req, res, next) {
     req.io = io;
     next();
 });
+// Middleware
+app.use(helmet());
 // Routers
 app.use("/control", control_1.default);
 /**
