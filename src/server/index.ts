@@ -40,7 +40,6 @@ app.use(
 // Middleware
 app.use(helmet());
 
-
 // Routers
 app.use("/control", control);
 
@@ -71,12 +70,20 @@ function applicationReady(): void {
   }
 }
 
-// List of bootup tasks to be completed before setting the app as ready
-const bootupTasks: Array<Promise<any>> = [startServer(http), initializeDb()];
+async function main(): Promise<void> {
+  /** Run setup tasks */
+  await Promise.all([initializeDb()]);
 
-// Start all required services, then send the ready signal
-Promise.all(bootupTasks)
-  .then(applicationReady)
-  .catch(e => {
-    logger.error(e);
-  });
+  /** Run startup tasks */
+  await Promise.all([startServer(http)]);
+
+  /** Send the ready signal */
+  applicationReady();
+}
+
+/**
+ * Main function. Bootstraps entire application
+ */
+main().catch(e => {
+  logger.error(e);
+});

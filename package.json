@@ -7,8 +7,8 @@
     "deploy": "pm2 deploy production",
     "build": "tsc",
     "watch-server": "tsc --watch",
-    "db-tunnel": "ssh brandon@droplet -L 28015:localhost:28015 -N",
-    "serve-local": "DEBUG=poster-wall,express* NODE_ENV=development nodemon ./dist/index.js",
+    "serve-local": "DEBUG=poster-wall,express* NODE_ENV=development nodemon dist/index",
+    "db-tunnel": "ssh rethink-droplet -L 28015:localhost:32769 -N",
     "dev": "concurrently \"npm:db-tunnel\" \"npm:watch-server\" \"npm:serve-local\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -42,14 +42,8 @@ var config_1 = require("./config");
 var logger_1 = require("./logger");
 var connection;
 var _initializeDb = function (r) {
-    return new Promise(function (resolve, reject) {
-        r.connect({ host: config_1.dbHost, port: config_1.dbPort }, function (err, conn) {
-            if (err) {
-                reject(err);
-            }
-            resolve(conn);
-        });
-    });
+    logger_1.default.info("Connecting to DB on host " + config_1.dbHost + ":" + config_1.dbPort);
+    return r.connect({ host: config_1.dbHost, port: config_1.dbPort });
 };
 exports.initializeDb = function () {
     return _initializeDb(r);

@@ -9,17 +9,8 @@ import logger from "./logger";
 let connection: Connection;
 
 const _initializeDb = (r): Promise<Connection> => {
-  return new Promise((resolve, reject) => {
-    r.connect(
-      { host: dbHost, port: dbPort },
-      (err: Error, conn) => {
-        if (err) {
-          reject(err);
-        }
-        resolve(conn);
-      }
-    );
-  });
+  logger.info(`Connecting to DB on host ${dbHost}:${dbPort}`);
+  return r.connect({ host: dbHost, port: dbPort });
 };
 
 export const initializeDb = (): Promise<Connection> => {
