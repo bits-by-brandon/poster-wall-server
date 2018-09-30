@@ -1,9 +1,17 @@
 let timeline = new TimelineMax({ repeat: -1, repeatDelay: 1 });
 
+const storage = window.localStorage;
 const socket = io();
 const cardList = document.getElementsByClassName("card");
 const alertText = document.getElementById("alert-text");
 const alertWrapper = document.getElementById("alert");
+
+// ==============
+// === UUID Setup
+let foundUID = storage.getItem('UID');
+if(!foundUID){
+} else {
+}
 
 socket.on("MESSAGE", function(msg) {
   showAlert(msg);
@@ -47,7 +55,6 @@ function executeCommand(command, alertUser = true) {
       break;
   }
 }
-
 
 /**
  * Temporarily displays an alert prompt on the screen with the passed in
