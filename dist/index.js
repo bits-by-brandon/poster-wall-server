@@ -39,7 +39,7 @@ var express = require("express");
 var helmet = require("helmet");
 var socketIO = require("socket.io");
 var config_1 = require("./config");
-var dbConnect_1 = require("./dbConnect");
+// import { initializeDb } from "./dbConnect";
 var socketController_1 = require("./socketController");
 var logger_1 = require("./logger");
 var http_1 = require("http");
@@ -52,7 +52,9 @@ var io = socketIO(http);
 io.on("connection", function (socket) { return socketController_1.default(socket); });
 // Allow ips to come from proxy forward
 app.enable("trust proxy");
+// Development mode config
 if (process.env.NODE_ENV === "development") {
+    // Serve files via express
     app.use(express.static(__dirname + "/public"));
 }
 // Let other middleware use the instantiated io instance
@@ -95,13 +97,12 @@ function main() {
             switch (_a.label) {
                 case 0: 
                 /** Run setup tasks */
-                return [4 /*yield*/, Promise.all([dbConnect_1.initializeDb()])];
+                // await Promise.all([initializeDb()]);
+                /** Run startup tasks */
+                return [4 /*yield*/, Promise.all([startServer(http)])];
                 case 1:
                     /** Run setup tasks */
-                    _a.sent();
-                    /** Run startup tasks */
-                    return [4 /*yield*/, Promise.all([startServer(http)])];
-                case 2:
+                    // await Promise.all([initializeDb()]);
                     /** Run startup tasks */
                     _a.sent();
                     /** Send the ready signal */

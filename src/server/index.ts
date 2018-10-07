@@ -2,7 +2,7 @@ import express = require("express");
 import helmet = require("helmet");
 import socketIO = require("socket.io");
 import { port } from "./config";
-import { initializeDb } from "./dbConnect";
+// import { initializeDb } from "./dbConnect";
 import socketController from "./socketController";
 import logger from "./logger";
 
@@ -25,7 +25,9 @@ io.on("connection", socket => socketController(socket));
 // Allow ips to come from proxy forward
 app.enable("trust proxy");
 
+// Development mode config
 if (process.env.NODE_ENV === "development") {
+  // Serve files via express
   app.use(express.static(__dirname + "/public"));
 }
 
@@ -72,7 +74,7 @@ function applicationReady(): void {
 
 async function main(): Promise<void> {
   /** Run setup tasks */
-  await Promise.all([initializeDb()]);
+  // await Promise.all([initializeDb()]);
 
   /** Run startup tasks */
   await Promise.all([startServer(http)]);

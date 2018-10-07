@@ -8,8 +8,8 @@
     "build": "tsc",
     "watch-server": "tsc --watch",
     "serve-local": "DEBUG=poster-wall,express* NODE_ENV=development nodemon dist/index",
-    "db-tunnel": "ssh rethink-droplet -L 28015:localhost:32769 -N",
-    "dev": "concurrently \"npm:db-tunnel\" \"npm:watch-server\" \"npm:serve-local\"",
+    "db-tunnel": "ssh droplet -L 3306:localhost:3306 -N",
+    "dev-server": "concurrently \"npm:watch-server\" \"npm:serve-local\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
