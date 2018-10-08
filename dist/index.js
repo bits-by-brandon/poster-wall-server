@@ -39,7 +39,7 @@ var express = require("express");
 var helmet = require("helmet");
 var socketIO = require("socket.io");
 var config_1 = require("./config");
-// import { initializeDb } from "./dbConnect";
+var dbConnect_1 = require("./dbConnect");
 var socketController_1 = require("./socketController");
 var logger_1 = require("./logger");
 var http_1 = require("http");
@@ -97,12 +97,13 @@ function main() {
             switch (_a.label) {
                 case 0: 
                 /** Run setup tasks */
-                // await Promise.all([initializeDb()]);
-                /** Run startup tasks */
-                return [4 /*yield*/, Promise.all([startServer(http)])];
+                return [4 /*yield*/, Promise.all([dbConnect_1.initializeDb()])];
                 case 1:
                     /** Run setup tasks */
-                    // await Promise.all([initializeDb()]);
+                    _a.sent();
+                    /** Run startup tasks */
+                    return [4 /*yield*/, Promise.all([startServer(http)])];
+                case 2:
                     /** Run startup tasks */
                     _a.sent();
                     /** Send the ready signal */

@@ -11,6 +11,6 @@
     "allowSyntheticDefaultImports": true
   },
   "include": [
-    "src/server/**/*"
+    "src/**/*"
   ]
 }

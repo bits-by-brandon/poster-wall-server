@@ -36,37 +36,47 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-/// <reference path=""
-var r = require("rethinkdb");
+var Sequel = require("sequelize");
 var config_1 = require("./config");
 var logger_1 = require("./logger");
 var connection;
-var _initializeDb = function (r) {
+var _initializeDb = function () {
     logger_1.default.info("Connecting to DB on host " + config_1.dbHost + ":" + config_1.dbPort);
-    return r.connect({ host: config_1.dbHost, port: config_1.dbPort });
+    return new Sequel(config_1.dbDatabase, config_1.dbUsername, config_1.dbPassword, {
+        host: config_1.dbHost,
+        dialect: "mysql"
+    });
 };
 exports.initializeDb = function () {
-    return _initializeDb(r);
+    if (connection) {
+        return connection;
+    }
+    connection = _initializeDb();
+    return connection;
 };
 exports.getDb = function () { return __awaiter(_this, void 0, void 0, function () {
     var e_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                if (!!connection) return [3 /*break*/, 5];
+                if (!!connection) return [3 /*break*/, 6];
                 _a.label = 1;
             case 1:
-                _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, _initializeDb(r)];
+                _a.trys.push([1, 4, , 5]);
+                return [4 /*yield*/, _initializeDb()];
             case 2:
                 connection = _a.sent();
-                return [3 /*break*/, 4];
+                return [4 /*yield*/, connection.authenticate()];
             case 3:
+                _a.sent();
+                return [3 /*break*/, 5];
+            case 4:
                 e_1 = _a.sent();
                 logger_1.default.error(e_1);
+                connection = null;
                 throw new Error(e_1);
-            case 4: return [2 /*return*/, connection];
             case 5: return [2 /*return*/, connection];
+            case 6: return [2 /*return*/, connection];
         }
     });
 }); };

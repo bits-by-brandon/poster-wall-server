@@ -2,7 +2,7 @@ import express = require("express");
 import helmet = require("helmet");
 import socketIO = require("socket.io");
 import { port } from "./config";
-// import { initializeDb } from "./dbConnect";
+import { initializeDb, getDb } from "./dbConnect";
 import socketController from "./socketController";
 import logger from "./logger";
 
@@ -74,7 +74,7 @@ function applicationReady(): void {
 
 async function main(): Promise<void> {
   /** Run setup tasks */
-  // await Promise.all([initializeDb()]);
+  await Promise.all([initializeDb()]);
 
   /** Run startup tasks */
   await Promise.all([startServer(http)]);
